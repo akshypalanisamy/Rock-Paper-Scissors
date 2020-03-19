@@ -1,6 +1,6 @@
 //This application is a rock, paper and scissors game written in Scala
 //I wrote this program to learn the basics of Scala 
-//The user plays with the character Jigsaw from the movie SAW
+//The user plays with the character Elon from the movie SAW
 //The game is played on the Scala console
 //This is text based game where the user replies with 'rock', 'paper' or 'scissors'
 
@@ -14,40 +14,52 @@ object App {
     var tries = 3 //This is the number of tries the user has
     var answers = Array("rock", "paper", "scissors") //These are the possible answers
     var playerGuess = new String //Holds the player's guess
-    var jigsawGuess = new String //Holds Jigsaw's guess
-    val correctGuess = scala.util.Random //Jigsaw's guess is random, so it selects from the three answers
+    var elonGuess = new String //Holds Elon's guess
+    var playerWins = 0 //Holds the player's guess
+    var elonWins = 0 //Holds Elon's guess
+    val correctGuess = scala.util.Random //Elon's guess is random, so it selects from the three answers
 
-   //This Array holds all the lines said by Jigsaw
+   //This Array holds all the lines said by Elon
     def speech = Array(
       "Hello, " + name + "!",
-      "You don't know me but",
+      "My name is Elon!",
       "",
-      " I know you.",
+      "I am an AI.",
       "",
-      "I want to play a game.",
-      "There is only one way out of this.",
-      "Beat me in a game of Rock, Paper, Scissors!",
+      "Let's play a game!",
+      "Hmmm... what game should we play?",
+      "How about a game of Rock, Paper, Scissors?!",
       "",
-      "I'll give you three chances.",
+      "Best out of three rounds win.",
       "",
-      "Go ahead and make your choice: ",
+      "Go ahead and make your choice by typing rock, paper or scissors:",
 
-      "You exceeded my expectations.",
-      "You are free to go.",
+      "Well since you have "+playerWins+" wins and I have "+elonWins+"...", //12
+      "You Won! Bye for now!",
       "",
-      "For now.",
-      "",
+      "You must be pretty smart to beat an AI.",
+      "",//16
 
-      "Look at my hand, it's "+jigsawGuess+". Why don't you guess again?",
-      "You have only "+ tries.toString +" tries left.",
+      "Look at my hand, it's "+elonGuess+", which is equal to "+playerGuess+". How about we do that round again?",//17
+      "So far you have "+playerWins+" wins and I have "+elonWins+" wins",
+      "We still have "+ tries.toString +" rounds left:",//19
 
-      "Pity.",
-      "",
-      "This won't hurt a bit.",
-      "",
+      "Look at my hand, it's "+elonGuess+", which beats "+playerGuess+". Better luck next round!",//20
+      "So far you have "+playerWins+" wins and I have "+elonWins+" wins",
+      "There is still "+ tries.toString +" rounds to go:", //22
 
-      "Tsk Tsk, that's going to cost you.",
-      "You have only "+ tries.toString +" tries left.")
+      "Look at my hand, it's "+elonGuess+", which is beaten by "+playerGuess+". Nice one!", //23
+      "So far you have "+playerWins+" wins and I have "+elonWins+" wins",
+      "There is still "+ tries.toString +" rounds to go:", //25
+
+      "Well since you have "+playerWins+" wins and I have "+elonWins+"...", //26
+      "Looks like I won!",
+      "",
+      "AI's are smarter than humans anyway... so don't fret! You could always try again.",
+      "", //30
+      
+      "You do know how to play right? I'm gonna pretend you didn't type that...", //31
+      "Let's try this again, shall we?:") //32
 
     //These two variables determine where the dialog starts and stops, which is then used
     //in printing out the dialog in the for loop below
@@ -66,7 +78,7 @@ do{
     var textIter = 0
     for (i <- 0 to textLength) {
       System.out.print("|")
-      Thread.sleep(200) //Added for typing effect
+      Thread.sleep(0) //Added for typing effect
       if (textIter <= textLength) {
         System.out.print("\r")
         for (j <- 0 to textIter) {
@@ -81,28 +93,60 @@ do{
 
 
   //This series of if statements checks what the player answers and gives a corresponding text answer
-    if(tries != 0 ) {
-      jigsawGuess = answers(correctGuess.nextInt(3)) //Jigsaw plays a new hand each time
+    if(tries != -1 ) {
+      if ((playerWins == 2)||(elonWins == 2)) { //Game Over
+          tries = -1
+          if(playerWins>elonWins){
+            textIndex = 12
+            textStop = 16
+          }else{
+            textIndex = 26
+            textStop = 30
+          }
+        }else{
+      elonGuess = answers(correctGuess.nextInt(3)) //Elon plays a new hand each time
       System.out.print("> ")
       playerGuess = scala.io.StdIn.readLine()
-      if (playerGuess == jigsawGuess) {
-        textIndex = 12
-        textStop = 16
-        tries = 0
+      if (playerGuess == elonGuess) {
+        textIndex = 17
+        textStop = 19
       } else {
         tries -= 1
-        if (tries == 0) {
-          textIndex = 19
-          textStop = 22
-        } else if(answers contains (playerGuess)){
-            textIndex = 17
-            textStop = 18
+        if((playerGuess.length() == 8) && (elonGuess.length()==5)){ // Scissors Beats Paper (Player Wins)
+            playerWins += 1
+            textIndex = 23
+            textStop = 25
+        } else if((playerGuess.length() == 5) && (elonGuess.length()==8)){ // Scissors Beats Paper (Elon Wins)
+            elonWins += 1
+            textIndex = 20
+            textStop = 22
+        } else if((playerGuess.length() == 5) && (elonGuess.length()==4)){ // Paper Beats Rock (Player Wins)
+            playerWins += 1
+            textIndex = 23
+            textStop = 25
+        } else if((playerGuess.length() == 4) && (elonGuess.length()==5)){ // Paper Beats Rock (Elon Wins)
+            elonWins += 1
+            textIndex = 20
+            textStop = 22
+        }else if((playerGuess.length() == 4) && (elonGuess.length()==8)){ // Rock Beats Scissors (Player Wins)
+            playerWins += 1
+            textIndex = 23
+            textStop = 25
+        } else if((playerGuess.length() == 8) && (elonGuess.length()==4)){ // Rock Beats Scissors (Elon Wins)
+            elonWins += 1
+            textIndex = 20
+            textStop = 22
         } else {
-          textIndex = 23
-          textStop = 24
-        }
+          tries += 1
+          textIndex = 31
+          textStop = 32
+        } 
+    
+
       }
+        }
     }else{win = true}
+
 
 }while(win != true)
 
