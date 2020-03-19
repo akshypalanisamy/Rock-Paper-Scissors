@@ -1,5 +1,4 @@
 //This application is a rock, paper and scissors game written in Scala
-//I wrote this program to learn the basics of Scala 
 //The user plays with the character Elon who is an AI
 //The game is played on the Scala console
 //This is text based game where the user replies with 'rock', 'paper' or 'scissors'
