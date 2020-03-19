@@ -1,5 +1,5 @@
-# ScalaGame
-This is an interactive text based rock, paper, scissors game written in Scala running on the terminal.
+# Rock Paper Scissors
+This is an interactive text-based rock, paper, scissors game written in Scala running on the terminal.
 
 To play the game run the app using the following command:
 
