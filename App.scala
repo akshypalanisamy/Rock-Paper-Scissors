@@ -78,7 +78,7 @@ do{
     var textIter = 0
     for (i <- 0 to textLength) {
       System.out.print("|")
-      Thread.sleep(0) //Added for typing effect
+      Thread.sleep(100) //Added for typing effect
       if (textIter <= textLength) {
         System.out.print("\r")
         for (j <- 0 to textIter) {
