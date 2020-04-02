@@ -8,3 +8,6 @@ $scala App.scala
 ```
 
 Then follow the onscreen commands to play the game.
+
+
+Some of my favorite games: https://youtu.be/9Axn7DB4iQI
